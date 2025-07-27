@@ -7,7 +7,7 @@ class ListUser extends React.Component {
     }
 
 
-    async componnentDidmount() {
+    async componnentDidMount() {
         // axios.get('https://reqres.in/api/users')
         // .then(res =>{
         //     console.log('>> check res:', res.data.data)

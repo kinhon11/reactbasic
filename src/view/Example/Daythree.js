@@ -7,26 +7,27 @@ class Daythree extends React.Component{
     }
     handleOnChangeName = (event) => {
         this.setState({
-            name: event.target.value
-        });}
-        handleClickButton = () =>{
-            alert('Click me')
-        }
-    // là 1 mảng
+            Name: event.target.value
+        });
+    }
+    handleOnchangeChannel =()=>{
+        this.setState({
+            Channel: this.target.Name
+        });
+    }
     render() {
         return(
         <>
          <div className="first">
             <input value={this.state.Name} type="text"
-            onChange={(event) => this.handleOnChangeName(event)}
-            />
+            onChange={(event) => this.handleOnChangeName(event)} />
             HELLO MyComponent, {this.state['name']}
         </div>
         <div className="second">
             My channel, {this.state.Channel}
         </div>
         <div className="third">
-            <button onClick={() => this.handleClickButton}>
+            <button onClick={() => this.handleOnchangeChannel()}>
                 Click me           
             </button>
         </div>

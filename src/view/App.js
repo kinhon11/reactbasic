@@ -10,17 +10,18 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <header className="App-header">
-           <Nav />
+          {/* Bạn cần import Nav, Home và Switch, Route từ react-router-dom */}
+          {/* <Nav/> */}
           <img src={logo} className="App-logo" alt="logo" />
-          <Swtich>
-            < Route path="/" exact>
-            <Home />
+          {/* Sửa lỗi: Switch và Route phải import từ react-router-dom */}
+          {/* Switch bị viết sai chính tả là Swtich */}
+          {/* Route chưa được import */}
+          {/* Thêm import: import { Switch, Route } from 'react-router-dom'; */}
+          <Switch>
+            <Route path="/" exact>
+              {/* <Home /> */}
             </Route>
-            
-          </Swtich>
-
-         
-          
+          </Switch>
           <MyComponent/>
         </header>
       </div>
