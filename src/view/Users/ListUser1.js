@@ -8,19 +8,28 @@ class ListUser extends React.Component {
     title: "",
     body: "",
     editingId: null,
+    loading: false, // trạng thái loading
+    error: null, // trạng thái lỗi
   };
+
   componentDidMount() {
     this.getPosts();
   }
+
   getPosts = () => {
+    this.setState({ loading: true, error: null });
     axios
       .get("https://jsonplaceholder.typicode.com/posts?_limit=5")
-      .then((res) => this.setState({ posts: res.data }))
-      .catch((err) => console.error(err));
+      .then((res) => this.setState({ posts: res.data, loading: false }))
+      .catch((err) =>
+        this.setState({ error: "Lỗi khi tải dữ liệu", loading: false })
+      );
   };
+
   createPost = () => {
     const { title, body } = this.state;
     if (!title || !body) return;
+    this.setState({ loading: true, error: null });
     axios
       .post("https://jsonplaceholder.typicode.com/posts", {
         title,
@@ -32,12 +41,18 @@ class ListUser extends React.Component {
           posts: [res.data, ...prev.posts],
           title: "",
           body: "",
+          loading: false,
         }));
-      });
+      })
+      .catch(() =>
+        this.setState({ error: "Lỗi khi tạo post", loading: false })
+      );
   };
+
   updatePost = () => {
     const { editingId, title, body } = this.state;
     if (!editingId) return;
+    this.setState({ loading: true, error: null });
     axios
       .put(`https://jsonplaceholder.typicode.com/posts/${editingId}`, {
         title,
@@ -50,18 +65,27 @@ class ListUser extends React.Component {
           title: "",
           body: "",
           editingId: null,
+          loading: false,
         }));
-      });
+      })
+      .catch(() =>
+        this.setState({ error: "Lỗi khi cập nhật", loading: false })
+      );
   };
+
   deletePost = (id) => {
+    this.setState({ loading: true, error: null });
     axios
       .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
       .then(() => {
         this.setState((prev) => ({
           posts: prev.posts.filter((p) => p.id !== id),
+          loading: false,
         }));
-      });
+      })
+      .catch(() => this.setState({ error: "Lỗi khi xóa", loading: false }));
   };
+
   editpost = (post) => {
     this.setState({
       editingId: post.id,
@@ -69,11 +93,17 @@ class ListUser extends React.Component {
       body: post.body,
     });
   };
+
   render() {
-    const { posts, title, body, editingId } = this.state;
+    const { posts, title, body, editingId, loading, error } = this.state;
     return (
       <div className="post-manager">
         <h2>Post Manager</h2>
+
+        {/* Hiển thị trạng thái */}
+        {loading && <p style={{ color: "black" }}>loading...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
         <div className="form">
           <input
             type="text"
@@ -92,6 +122,7 @@ class ListUser extends React.Component {
             <button onClick={this.createPost}>Create Post</button>
           )}
         </div>
+
         <table>
           <thead>
             <tr>
@@ -121,4 +152,5 @@ class ListUser extends React.Component {
     );
   }
 }
+
 export default ListUser;
