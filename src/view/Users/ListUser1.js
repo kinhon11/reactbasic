@@ -8,8 +8,8 @@ class ListUser extends React.Component {
     title: "",
     body: "",
     editingId: null,
-    loading: false, // trạng thái loading
-    error: null, // trạng thái lỗi
+    loading: false,
+    error: null,
   };
 
   componentDidMount() {
